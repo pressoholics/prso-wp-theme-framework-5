@@ -348,6 +348,26 @@ class SocialHelper {
 		return $content;	
 	}
 	
+	static function twitter_convert_urls( $status, $targetBlank = true, $linkMaxLen=250 ){
+ 
+		// The target
+		$target=$targetBlank ? " target=\"_blank\" " : "";
+		 
+		// convert link to url
+		$status = preg_replace("/((http:\/\/|https:\/\/)[^ )
+		]+)/e", "'<a href=\"$1\" title=\"$1\" $target >'. ((strlen('$1')>=$linkMaxLen ? substr('$1',0,$linkMaxLen).'...':'$1')).'</a>'", $status);
+		 
+		// convert @ to follow
+		$status = preg_replace("/(@([_a-z0-9\-]+))/i","<a href=\"http://twitter.com/$2\" title=\"Follow $2\" $target >$1</a>",$status);
+		 
+		// convert # to search
+		$status = preg_replace("/(#([_a-z0-9\-]+))/i","<a href=\"http://search.twitter.com/search?q=%23$2\" title=\"Search $1\" $target >$1</a>",$status);
+		 
+		// return the status
+		return $status;
+		
+	}
+	
 	static function get_facebook_feed( $api_keys = array(), $page_id = NULL ) {
 		
 		//Init vars
@@ -411,11 +431,17 @@ class SocialHelper {
 				preg_match($regex, $item_description, $matches);
 				
 				$content[$pin_count]['image'] 		= $matches[0];
+				
+				//Get image src too		
+				preg_match('/< *img[^>]*src *= *["\']?([^"\']*)/i', $content[$pin_count]['image'], $matches);
+				
+				$content[$pin_count]['image_src']	= $matches[1];
+				
 				$content[$pin_count]['description']	= preg_replace($regex, '', $item_description);
 				$content[$pin_count]['link'] 		= (string) $item->link;
 				$content[$pin_count]['title'] 		= (string) $item->title;
 				$content[$pin_count]['timestamp'] 	= strtotime( $item->pubDate );
-				
+					
 				$pin_count++;
 		}
 		
@@ -469,5 +495,29 @@ class SocialHelper {
         
         return $result;
     }
+	
+	static function nice_date( $time ) {
+		
+		$time = strtotime( $time );
+		
+	    $time = time() - $time; // to get the time since that moment
+	
+	    $tokens = array (
+	        31536000 => 'year',
+	        2592000 => 'month',
+	        604800 => 'wk',
+	        86400 => 'd',
+	        3600 => 'h',
+	        60 => 'm',
+	        1 => 's'
+	    );
+	
+	    foreach ($tokens as $unit => $text) {
+	        if ($time < $unit) continue;
+	        $numberOfUnits = floor($time / $unit);
+	        return $numberOfUnits.' '.$text;
+	    }
+		
+	}
 	
 }
