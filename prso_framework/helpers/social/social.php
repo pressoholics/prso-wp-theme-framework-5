@@ -432,6 +432,9 @@ class SocialHelper {
 				
 				$content[$pin_count]['image'] 		= $matches[0];
 				
+				//Get large images not thumbnails
+				$content[$pin_count]['image'] = str_replace('192x', '736x', $content[$pin_count]['image']);
+				
 				//Get image src too		
 				preg_match('/< *img[^>]*src *= *["\']?([^"\']*)/i', $content[$pin_count]['image'], $matches);
 				
