@@ -460,6 +460,15 @@ class SocialHelper {
 		
 	}
 	
+	/*
+	
+	If you don't have a registered client already, create one at: http://instagram.com/developer/clients/manage/
+
+	Put your Client ID and the redirect url of your client at the following URL and open it:
+	
+	https://instagram.com/oauth/authorize/?client_id=CLIENT-ID&redirect_uri=REDIRECT-URI&response_type=token
+	
+	*/
 	static function get_instagram_feed( $api_keys = array() ) {
 		
 		//Init vars
@@ -477,12 +486,9 @@ class SocialHelper {
 		
 		extract( $api_keys );
 		
-		$result 	= fetch_instagram_data("https://api.instagram.com/v1/users/self/feed?count={$count}&display_size={$display_size}&access_token={$access_token}");
+		$result 	= SocialHelper::fetch_instagram_data("https://api.instagram.com/v1/users/self/feed?count={$count}&display_size={$display_size}&access_token={$access_token}");
 		
 		$content 	= json_decode($result);
-		
-		prso_debug($content);
-		exit();
 		
 		return $content;	
 	}
