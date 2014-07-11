@@ -46,7 +46,7 @@
 	<body <?php //body_class(); ?>>
 		
 		<!-- off canvas wrap !-->
-		<div class="off-canvas-wrap">
+		<div class="off-canvas-wrap" data-offcanvas>
 			<div class="inner-wrap">
 				
 				<!-- Mobile nav activate button !-->
