@@ -1847,7 +1847,7 @@ class PrsoThemeFunctions extends PrsoThemeAppController {
 				//Parent nav element with children
 				ob_start();
 				?>
-				<a class="parent-nav-item" href="<?php echo $item->url; ?>"><?php echo $item->title; ?></a>
+				<a class="parent-nav-item" target="<?php echo $item->target; ?>" href="<?php echo $item->url; ?>"><?php echo $item->title; ?></a>
 				<?php
 				$item_output = ob_get_contents();
 				ob_end_clean();
@@ -1857,7 +1857,7 @@ class PrsoThemeFunctions extends PrsoThemeAppController {
 				//Child nav element
 				ob_start();
 				?>
-				<a class="child-nav-item" href="<?php echo $item->url; ?>"><?php echo $item->title; ?></a>
+				<a class="child-nav-item" target="<?php echo $item->target; ?>" href="<?php echo $item->url; ?>"><?php echo $item->title; ?></a>
 				<?php
 				$item_output = ob_get_contents();
 				ob_end_clean();
@@ -1867,7 +1867,7 @@ class PrsoThemeFunctions extends PrsoThemeAppController {
 				//GrandChild nav element
 				ob_start();
 				?>
-				<a class="grandchild-nav-item" href="<?php echo $item->url; ?>"><?php echo $item->title; ?></a>
+				<a class="grandchild-nav-item" target="<?php echo $item->target; ?>" href="<?php echo $item->url; ?>"><?php echo $item->title; ?></a>
 				<?php
 				$item_output = ob_get_contents();
 				ob_end_clean();
